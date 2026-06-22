@@ -53,3 +53,24 @@ class RSIStrategy():
         
         signals = (rsi < self.oversold).astype(int)
         return signals.fillna(0)
+    
+class BollingerBandStrategy():
+    def __init__(self,lookback: int = 20, num_std: int = 2):
+        self.lookback = lookback
+        self.num_std = num_std
+        
+    def bollinger_bands(self, data: pd.DataFrame):
+        mean = data.rolling(self.lookback).mean()
+        std = data.rolling(self.lookback).std()
+        
+        upper_band = mean + (self.num_std * std)
+        lower_band = mean - (self.num_std * std)
+        
+        return lower_band,mean,upper_band
+    
+    def generate_signals(self, data: pd.DataFrame) -> pd.Series:
+        lower_band, middle_band,upper_band = self.bollinger_bands(data)
+        signals = (data["Close"] < lower_band).astype(int)
+        return signals.fillna(0)
+        
+        
