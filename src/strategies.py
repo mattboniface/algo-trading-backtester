@@ -91,5 +91,34 @@ class MACDStrategy():
         
         macd_line = ema_short - ema_long
         signal_line = macd_line.ewm(span=self.macd_span, adjust=False).mean()
-        ...
         
+        signals = (macd_line > signal_line).astype(int)
+        return signals.fillna(0)
+    
+class VolatilityBreakoutStrategy():
+    def __init__(self,data:pd.DataFrame,lookback: int = 14,multiplier: int = 1.5):
+        self.lookback = lookback
+        self.multiplier = multiplier
+        
+        self.data = data
+          
+    def get_atr(self):
+        high_low = self.data["High"] - self.data["Low"]
+        high_close = (self.data["High"] - self.data["Close"].shift(1)).abs()
+        low_close = (self.data["Low"] - self.data["Close"].shift(1)).abs()
+        
+        true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+        atr = true_range.rolling(self.atr_window).mean()
+        
+        return atr
+    
+    def generate_signals(self) -> pd.Series:
+        atr = self.get_atr()
+        reference_price = self.data["Close"].shift(1)
+        
+        breakout_threshold = reference_price + (self.multiplier * atr)
+        
+        signals = (self.data["Close"] > breakout_threshold).astype(int)
+        return signals.fillna(0)
+    
+    
