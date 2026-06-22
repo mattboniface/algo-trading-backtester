@@ -72,5 +72,24 @@ class BollingerBandBreakoutStrategy():
         lower_band, middle_band,upper_band = self.bollinger_bands(data)
         signals = (data["Close"] > upper_band).astype(int)
         return signals.fillna(0)
+    
+class MACDStrategy():
+    def __init__(self,data:pd.DataFrame,short_window: int = 12, long_window: int = 26, macd_span: int = 9):
+        self.short_window = short_window
+        self.long_window = long_window
+        self.macd_span = macd_span
         
+        self.data = data
+        
+    def ema(self,period: int):
+        ema = self.data["Close"].ewm(span=period,adjust=False).mean()
+        return ema
+        
+    def generate_signals(self) -> pd.Series:
+        ema_short = self.ema(self.short_window)
+        ema_long = self.ema(self.long_window)
+        
+        macd_line = ema_short - ema_long
+        signal_line = macd_line.ewm(span=self.macd_span, adjust=False).mean()
+        ...
         
