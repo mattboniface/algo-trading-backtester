@@ -16,8 +16,3 @@ class DataLoader():
         data.to_csv(file_path,)
         
         return data
-        
-        
-loader = DataLoader()
-data = loader.get_price_history("AAPL","2026-01-01","2026-01-10")
-print(data)
