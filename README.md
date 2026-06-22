@@ -1,2 +1,19 @@
-# algo-trading-backtester
-A system that downloads market data from yahoofinance, generates signals, executes trades, tracks performance &amp; measures risk.
+# Algorithmic Trading Backtester
+
+## What it does
+[fill in once built]
+
+## Strategies implemented
+[fill in]
+
+## Results
+[charts/table go here]
+
+## Limitations
+[be honest]
+
+## How to run
+\`\`\`
+pip install -r requirements.txt
+python src/backtest.py
+\`\`\`
