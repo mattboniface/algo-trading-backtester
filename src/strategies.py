@@ -31,3 +31,25 @@ class MeanReversionStrategy():
         
         signals = (data["Close"] < lower_band).astype(int)
         return signals.fillna(0)
+    
+class RSIStrategy():   
+    def __init__(self,window: int = 20, overbought: int = 70,oversold:int = 30):
+        self.window = window
+        
+        self.overbought = overbought
+        self.oversold = oversold
+                     
+    def calculate_rsi(self,data:pd.DataFrame):
+        price_diff = data["Close"].diff()
+        avg_gain = price_diff.where(price_diff > 0,0).rolling(self.window).mean()
+        avg_loss = price_diff.where(price_diff < 0,0).rolling(self.window).mean()
+        
+        rs = avg_gain/avg_loss
+        rsi = 100 - (100 / (1+rs))
+        return rsi
+    
+    def generate_signals(self, data: pd.DataFrame) -> pd.Series:
+        rsi = self.calculate_rsi(data)
+        
+        signals = (rsi < self.oversold).astype(int)
+        return signals.fillna(0)
