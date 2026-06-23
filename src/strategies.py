@@ -86,13 +86,13 @@ class MACDStrategy(Strategy):
         self.macd_span = macd_span
         
         
-    def ema(self,period: int):
-        ema = self.data["Close"].ewm(span=period,adjust=False).mean()
+    def ema(self,data:pd.DataFrame,period: int):
+        ema = data["Close"].ewm(span=period,adjust=False).mean()
         return ema
         
     def generate_signals(self,data:pd.DataFrame) -> pd.Series:
-        ema_short = self.ema(self.short_window)
-        ema_long = self.ema(self.long_window)
+        ema_short = self.ema(data,self.short_window)
+        ema_long = self.ema(data,self.long_window)
         
         macd_line = ema_short - ema_long
         signal_line = macd_line.ewm(span=self.macd_span, adjust=False).mean()
@@ -106,10 +106,10 @@ class VolatilityBreakoutStrategy(Strategy):
         self.multiplier = multiplier
         
           
-    def get_atr(self):
-        high_low = self.data["High"] - self.data["Low"]
-        high_close = (self.data["High"] - self.data["Close"].shift(1)).abs()
-        low_close = (self.data["Low"] - self.data["Close"].shift(1)).abs()
+    def get_atr(self,data: pd.DataFrame):
+        high_low = data["High"] - data["Low"]
+        high_close = (data["High"] - data["Close"].shift(1)).abs()
+        low_close = (data["Low"] - data["Close"].shift(1)).abs()
         
         true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
         atr = true_range.rolling(self.atr_window).mean()
@@ -118,9 +118,9 @@ class VolatilityBreakoutStrategy(Strategy):
     
     def generate_signals(self,data:pd.DataFrame) -> pd.Series:
         atr = self.get_atr()
-        reference_price = self.data["Close"].shift(1)
+        reference_price = data["Close"].shift(1)
         
         breakout_threshold = reference_price + (self.multiplier * atr)
         
-        signals = (self.data["Close"] > breakout_threshold).astype(int)
+        signals = (data["Close"] > breakout_threshold).astype(int)
         return signals.fillna(0)
