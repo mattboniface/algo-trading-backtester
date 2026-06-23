@@ -6,7 +6,7 @@ from backtest import BackTestResult
 def total_return(result: BackTestResult) -> float:
     return result.equity_curve.iloc[-1] / result.initial_capital - 1
 
-def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_of_periods:float = 252) -> float:
+def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_of_periods:int = 252) -> float:
     periodic_risk_free_rate = total_risk_free_rate / num_of_periods
     
     returns = result.equity_curve.pct_change().dropna()
@@ -39,3 +39,8 @@ def win_rate(result:BackTestResult) -> float:
     
     win_rate = winning_trades / total_trades
     return win_rate
+
+def annualised_volatility(result: BackTestResult,num_of_periods:int = 252) -> float:
+    returns = result.equity_curve.pct_change().dropna()
+    return returns.std() * np.sqrt(num_of_periods)
+        
