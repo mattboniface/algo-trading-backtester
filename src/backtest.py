@@ -1,5 +1,5 @@
 import pandas as pd
-from strategies import Strategy
+from .strategies import Strategy
 
 class BackTester():
     def __init__(self, starting_capital:float = 1000.0):
