@@ -1,12 +1,23 @@
 import pandas as pd
 from .strategies import Strategy
 
+class BackTestResult():
+    def __init__(self,
+                 equity_curve: pd.Series,
+                 positions: pd.Series,
+                 trades: pd.Series,
+                 inital_capital: float):
+        self.equity_curve = equity_curve
+        self.positions = positions
+        self.trades = trades
+        self.initial_capital = inital_capital
+
 class BackTester():
     def __init__(self, starting_capital:float = 1000.0):
         self.starting_capital = starting_capital
         
-    def run_backtest(self, data: pd.DataFrame,strategy:str):
-        signals = Strategy.generate_signals(data)
+    def run_backtest(self, data: pd.DataFrame,strategy: Strategy):
+        signals = strategy.generate_signals(data)
         positions = signals.shift(1).fillna(0)
         
         returns = data["Close"].pct_change().fillna(0)
@@ -19,19 +30,8 @@ class BackTester():
         trades = pd.DataFrame(
             {
                 "Date": data.index[trades_mask],
-                "Position": positions.index[trades_mask]
+                "Position": positions[trades_mask]
             }
         )
 
-        return equity_curve,positions,trades,self.inital_capital
-    
-class BackTestResult():
-    def __init__(self,
-                 equity_curve: pd.Series,
-                 positions: pd.Series,
-                 trades: pd.Series,
-                 inital_capital: float):
-        self.equity_curve = equity_curve
-        self.positions = positions
-        self.trades = trades
-        self.initial_capital = inital_capital
+        return equity_curve,positions,trades,self.starting_capital

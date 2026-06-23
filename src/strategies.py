@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class Strategy(ABC):
     @abstractmethod
-    def generate_signals(self, data: pd.DataFrame) -> pd.Series:
+    def generate_signals(self, data: pd.DataFrame, strategy:str) -> pd.Series:
         ...
 
 class MovingAverageCrossover(Strategy):
