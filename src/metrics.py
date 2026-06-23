@@ -44,3 +44,13 @@ def annualised_volatility(result: BackTestResult,num_of_periods:int = 252) -> fl
     returns = result.equity_curve.pct_change().dropna()
     return returns.std() * np.sqrt(num_of_periods)
         
+def metric_summary(result: BackTestResult):
+    return pd.Series(
+        {
+           "Total Return": total_return(result),
+           "Sharpe ratio": sharpe_ratio(result),
+           "Max Drawdown": max_drawndown(result),
+           "Win Rate": win_rate(result),
+           "Annualised Volatility": annualised_volatility(result)
+        }
+    )
