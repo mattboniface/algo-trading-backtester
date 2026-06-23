@@ -5,7 +5,7 @@ from src.metrics import metric_summary
 import pandas as pd
 
 def main():
-    ticker = "AAPL"
+    ticker = "SPY"
     
     loader = DataLoader()
     data = loader.get_price_history(ticker = ticker,start = "2020-01-01",end = "2026-06-22")
@@ -31,7 +31,7 @@ def main():
     comparison = pd.DataFrame(results).T
     print("\n--- Strategy Comparison ---")
     print(comparison.round(4))
-    comparison.to_csv(f"outputs/{ticker}_comparison_results.csv")
+    comparison.to_csv(f"outputs/comparison_results.csv")
     
 if __name__ == "__main__":
     main()
