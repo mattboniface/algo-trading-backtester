@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from backtest import BackTestResult
+from .backtest import BackTestResult
 
 def plot_equity_curve(result: BackTestResult,data: pd.DataFrame,title: str = "Strategy vs Buy & Hold"):
     buy_hold_returns = data["Close"].pct_change().fillna(0)

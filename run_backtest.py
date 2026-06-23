@@ -2,6 +2,7 @@ from src.data import DataLoader
 from src.backtest import BackTester
 from src.strategies import *
 from src.metrics import metric_summary
+from src.visualise import plot_equity_curve, plot_drawdown
 import pandas as pd
 
 def main():
@@ -32,6 +33,9 @@ def main():
     print("\n--- Strategy Comparison ---")
     print(comparison.round(4))
     comparison.to_csv(f"outputs/comparison_results.csv")
+    
+    plot_equity_curve(result, data, title="Moving Average Crossover vs Buy & Hold")
+    plot_drawdown(result)
     
 if __name__ == "__main__":
     main()

@@ -6,11 +6,11 @@ class BackTestResult():
                  equity_curve: pd.Series,
                  positions: pd.Series,
                  trades: pd.Series,
-                 inital_capital: float):
+                 starting_capital: float):
         self.equity_curve = equity_curve
         self.positions = positions
         self.trades = trades
-        self.initial_capital = inital_capital
+        self.starting_capital = starting_capital
 
 class BackTester():
     def __init__(self, starting_capital:float = 1000.0):
@@ -38,5 +38,5 @@ class BackTester():
             equity_curve=equity_curve,
             positions=positions,
             trades=trades,
-            inital_capital=self.starting_capital
+            starting_capital=self.starting_capital
         )
