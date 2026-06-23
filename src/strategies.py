@@ -30,8 +30,8 @@ class MeanReversionStrategy(Strategy):
         self.num_std = num_std
         
     def generate_signals(self, data: pd.DataFrame) -> pd.Series:
-        mean = data.rolling(self.lookback).mean()
-        std = data.rolling(self.lookback).std()
+        mean = data["Close"].rolling(self.lookback).mean()
+        std = data["Close"].rolling(self.lookback).std()
         
         lower_band = mean - (std* self.num_std)
         
@@ -48,7 +48,7 @@ class RSIStrategy(Strategy):
     def calculate_rsi(self,data:pd.DataFrame):
         price_diff = data["Close"].diff()
         avg_gain = price_diff.where(price_diff > 0,0).rolling(self.window).mean()
-        avg_loss = price_diff.where(price_diff < 0,0).rolling(self.window).mean()
+        avg_loss = price_diff.where(price_diff < 0,0).rolling(self.window).mean().abs()
         
         rs = avg_gain/avg_loss
         rsi = 100 - (100 / (1+rs))
@@ -66,8 +66,8 @@ class BollingerBandBreakoutStrategy(Strategy):
         self.num_std = num_std
         
     def bollinger_bands(self, data: pd.DataFrame):
-        mean = data.rolling(self.lookback).mean()
-        std = data.rolling(self.lookback).std()
+        mean = data["Close"].rolling(self.lookback).mean()
+        std = data["Close"].rolling(self.lookback).std()
         
         upper_band = mean + (self.num_std * std)
         lower_band = mean - (self.num_std * std)
@@ -112,12 +112,12 @@ class VolatilityBreakoutStrategy(Strategy):
         low_close = (data["Low"] - data["Close"].shift(1)).abs()
         
         true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
-        atr = true_range.rolling(self.atr_window).mean()
+        atr = true_range.rolling(self.lookback).mean()
         
         return atr
     
     def generate_signals(self,data:pd.DataFrame) -> pd.Series:
-        atr = self.get_atr()
+        atr = self.get_atr(data)
         reference_price = data["Close"].shift(1)
         
         breakout_threshold = reference_price + (self.multiplier * atr)

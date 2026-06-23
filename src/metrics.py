@@ -18,7 +18,7 @@ def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_o
     
     annual_sharpe = periodic_sharpe * np.sqrt(num_of_periods)
     
-    return periodic_sharpe,annual_sharpe
+    return annual_sharpe
 
 def max_drawndown(result: BackTestResult) -> float:
     peak_value = result.equity_curve.cummax()
@@ -28,7 +28,7 @@ def max_drawndown(result: BackTestResult) -> float:
     return drawdowns.min()
 
 def win_rate(result:BackTestResult) -> float:
-    daily_returns = result.equity_curve.pct_change().dropna
+    daily_returns = result.equity_curve.pct_change().dropna()
     trading_days = daily_returns[daily_returns != 0]
 
     total_trades = len(trading_days)

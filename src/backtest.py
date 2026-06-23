@@ -34,4 +34,9 @@ class BackTester():
             }
         )
 
-        return equity_curve,positions,trades,self.starting_capital
+        return BackTestResult(
+            equity_curve=equity_curve,
+            positions=positions,
+            trades=trades,
+            inital_capital=self.starting_capital
+        )
