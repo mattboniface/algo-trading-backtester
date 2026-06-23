@@ -6,3 +6,17 @@ from backtest import BackTestResult
 def total_return(result: BackTestResult) -> float:
     return result.equity_curve.iloc[-1] / result.initial_capital - 1
 
+def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_of_periods:float = 252) -> float:
+    periodic_risk_free_rate = total_risk_free_rate / num_of_periods
+    
+    returns = result.equity_curve.pct_change().dropna()
+    excess_returns = returns - periodic_risk_free_rate
+    
+    if excess_returns.std() == 0:
+        return 0.0
+    periodic_sharpe = excess_returns.mean() / excess_returns.std()
+    
+    annual_sharpe = periodic_sharpe * np.sqrt(num_of_periods)
+    
+    return annual_sharpe
+    
