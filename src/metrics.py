@@ -18,5 +18,11 @@ def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_o
     
     annual_sharpe = periodic_sharpe * np.sqrt(num_of_periods)
     
-    return annual_sharpe
+    return periodic_sharpe,annual_sharpe
+
+def max_drawndown(result: BackTestResult):
+    peak_value = result.equity_curve.cummax()
+    trough_values = result.equity_curve
     
+    drawdowns = (trough_values - peak_value)/peak_value * 100
+    return drawdowns.min()
