@@ -1,0 +1,8 @@
+,Total Return,Sharpe Ratio,Max Drawdown,Win Rate,Annualised Volatility
+MA Crossover,1.223,0.6289,-43.3321,0.5259,0.2706
+Momentum,3.4924,1.3314,-25.4223,0.5347,0.2043
+Mean Reversion,0.2478,0.4264,-8.3238,0.4915,0.0976
+RSI,0.5837,1.0073,-4.1673,0.6122,0.0793
+Bollinger Band,0.0163,0.0753,-13.2791,0.5049,0.0592
+MACD,3.339,1.3778,-26.7405,0.5472,0.1914
+Volatility Breakout,-0.1968,-0.4855,-22.3583,0.4474,0.0701

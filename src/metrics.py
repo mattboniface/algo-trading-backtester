@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from .backtest import BackTestResult
+from backtest import BackTestResult
 
 
 def total_return(result: BackTestResult) -> float:
@@ -48,7 +48,7 @@ def metric_summary(result: BackTestResult):
     return pd.Series(
         {
            "Total Return": total_return(result),
-           "Sharpe ratio": sharpe_ratio(result),
+           "Sharpe Ratio": sharpe_ratio(result),
            "Max Drawdown": max_drawdown(result),
            "Win Rate": win_rate(result),
            "Annualised Volatility": annualised_volatility(result)
