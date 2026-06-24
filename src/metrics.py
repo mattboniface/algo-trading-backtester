@@ -20,7 +20,7 @@ def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_o
     
     return annual_sharpe
 
-def max_drawndown(result: BackTestResult) -> float:
+def max_drawdown(result: BackTestResult) -> float:
     peak_value = result.equity_curve.cummax()
     trough_values = result.equity_curve
     
@@ -49,7 +49,7 @@ def metric_summary(result: BackTestResult):
         {
            "Total Return": total_return(result),
            "Sharpe ratio": sharpe_ratio(result),
-           "Max Drawdown": max_drawndown(result),
+           "Max Drawdown": max_drawdown(result),
            "Win Rate": win_rate(result),
            "Annualised Volatility": annualised_volatility(result)
         }
