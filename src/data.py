@@ -8,9 +8,10 @@ class DataLoader():
         self.cache_dir = Path(__file__).parent.parent / cache_dir
         self.cache_dir.mkdir(exist_ok=True)
 
-    def get_price_history(self, ticker: str, start: str, end: str) -> pd.DataFrame:
+    def get_price_history(self, ticker: str, start: str = None, end: str = None,period: str = None) -> pd.DataFrame:
         yf_ticker = yf.Ticker(ticker)
-        data = yf_ticker.history(start=start, end=end)
+        data = yf_ticker.history(start=start, end=end, period=period)
+        yf.download()
 
         if data.empty:
             raise ValueError(f"No data returned for {ticker} between {start} and {end}")
