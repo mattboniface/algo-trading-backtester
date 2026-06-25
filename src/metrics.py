@@ -51,9 +51,9 @@ def annualised_volatility(result: BackTestResult,num_of_periods:int = 252) -> fl
 def metric_summary(result: BackTestResult):
     return pd.Series(
         {
-           "Total Return": total_return(result),
+           "Total Return (%)": total_return(result),
            "Sharpe Ratio": sharpe_ratio(result),
-           "Max Drawdown": max_drawdown(result),
+           "Max Drawdown (%)": max_drawdown(result),
            "Win Rate": win_rate(result),
            "Annualised Volatility": annualised_volatility(result)
         }

@@ -39,4 +39,4 @@ def main():
     plot_drawdown(result)
     
 if __name__ == "__main__":
-    test_backtester()
+    test_max_drawdown()

@@ -5,7 +5,6 @@ from src.metrics import *
 from src.strategies import *
 
 data = pd.read_csv("tests/sample_data.csv")
-print(data)
 
 def test_moving_avg_crossover():
     strategy = MovingAverageCrossover(short_window=5,long_window=10)
@@ -80,13 +79,27 @@ def test_total_return():
     assert round(total_return(result),2) == 9.71
     
 def test_sharpe_ratio():
-    ...
+    backtester = BackTester()
+    result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
+    
+    assert round(sharpe_ratio(result=result,total_risk_free_rate=0.0,num_of_periods=30),4) == 1.9313
+    assert round(sharpe_ratio(result=result,total_risk_free_rate=0.1,num_of_periods=30),4) == -0.0554
+    
 def test_max_drawdown():
-    ...
+    backtester = BackTester()
+    result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
+    assert round(max_drawdown(result),2) == -3.42
+    
 def test_win_rate():
-    ...
+    backtester = BackTester()
+    result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
+    assert round(win_rate(result),2) == 0.93
+    
 def test_annualised_volatility():
-    ...    
+    backtester = BackTester()
+    result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
+    assert round(annualised_volatility(result,30),2) == 0.05
+    
 if __name__ == "__main__":
     test_moving_avg_crossover()
     
