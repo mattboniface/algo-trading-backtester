@@ -1,5 +1,5 @@
 import pandas as pd
-from strategies import Strategy
+from .strategies import Strategy
 
 class BackTestResult():
     def __init__(self,

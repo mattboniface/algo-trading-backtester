@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from backtest import BackTestResult
+from .backtest import BackTestResult
 
 
 def total_return(result: BackTestResult) -> float:

@@ -7,9 +7,13 @@ class Strategy(ABC):
         ...
 
 class MovingAverageCrossover(Strategy):
+    def __init__(self,short_window:int = 50,long_window:int = 200):
+        self.short_window = short_window
+        self.long_window = long_window
+        
     def generate_signals(self, data: pd.DataFrame) -> pd.Series:
-        short_ma = data["Close"].rolling(50).mean()
-        long_ma = data["Close"].rolling(200).mean()
+        short_ma = data["Close"].rolling(self.short_window).mean()
+        long_ma = data["Close"].rolling(self.long_window).mean()
         
         signals = (short_ma > long_ma).astype(int)
         return signals.fillna(0)
