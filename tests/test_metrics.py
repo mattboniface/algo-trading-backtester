@@ -60,14 +60,12 @@ def test_volatility_breakout():
 def test_backtester():
     backtester = BackTester()
     result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
-    print(result.trades.reset_index(drop=True)) 
        
     correct_positions = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     correct_trades = pd.DataFrame({
     'Date': [6, 11, 21],
     'Position': [1.0, 0.0, 1.0]
 })
-    print(correct_trades)
     #correct_curve = [1000.0]
     
     
@@ -76,7 +74,6 @@ def test_backtester():
     #assert result.equity_curve.to_list() == correct_curve
     assert result.starting_capital == 1000
     
-
 if __name__ == "__main__":
     test_moving_avg_crossover()
     
