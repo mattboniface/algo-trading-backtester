@@ -4,7 +4,11 @@ from .backtest import BackTestResult
 
 
 def total_return(result: BackTestResult) -> float:
-    return result.equity_curve.iloc[-1] / result.starting_capital - 1
+    end = result.equity_curve.iloc[-1]
+    start = result.starting_capital
+    
+    total_return = (end - start)/start * 100
+    return total_return
 
 def sharpe_ratio(result: BackTestResult, total_risk_free_rate: float = 0.0,num_of_periods:int = 252) -> float:
     periodic_risk_free_rate = total_risk_free_rate / num_of_periods

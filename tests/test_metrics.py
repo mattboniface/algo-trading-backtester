@@ -66,14 +66,27 @@ def test_backtester():
     'Date': [6, 11, 21],
     'Position': [1.0, 0.0, 1.0]
 })
-    #correct_curve = [1000.0]
+    correct_curve = [1000.0000, 1000.0000, 1000.0000, 1000.0000, 1000.0000, 1000.0000, 1009.5541, 1012.7389, 1022.2930, 1025.4777, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 990.4459, 1000.7630, 1014.5192, 1024.8363, 1035.1535, 1038.5925, 1052.3487, 1069.5440, 1079.8611, 1097.0564]
     
     
     assert result.positions.to_list() == correct_positions
     pd.testing.assert_frame_equal(result.trades.reset_index(drop=True),correct_trades)
-    #assert result.equity_curve.to_list() == correct_curve
+    assert round(result.equity_curve,4).to_list() == correct_curve
     assert result.starting_capital == 1000
     
+def test_total_return():
+    backtester = BackTester()
+    result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
+    assert round(total_return(result),2) == 9.71
+    
+def test_sharpe_ratio():
+    ...
+def test_max_drawdown():
+    ...
+def test_win_rate():
+    ...
+def test_annualised_volatility():
+    ...    
 if __name__ == "__main__":
     test_moving_avg_crossover()
     
