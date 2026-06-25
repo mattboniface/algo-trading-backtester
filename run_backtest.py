@@ -3,6 +3,7 @@ from src.backtest import BackTester
 from src.strategies import *
 from src.metrics import metric_summary
 from src.visualise import plot_equity_curve, plot_drawdown
+from tests.test_metrics import *
 import pandas as pd
 
 def main():
@@ -38,4 +39,4 @@ def main():
     plot_drawdown(result)
     
 if __name__ == "__main__":
-    main()
+    test_backtester()
