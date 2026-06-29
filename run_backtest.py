@@ -41,4 +41,4 @@ def main():
     plot_drawdown(results_raw["Mean Reversion"])
     
 if __name__ == "__main__":
-    test_max_drawdown()
+    main()
