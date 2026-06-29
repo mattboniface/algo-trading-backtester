@@ -38,6 +38,9 @@ Given OHLCV price data for a single asset, this framework:
 | MACD                        |  50.4244    |   0.6331     |     -15.0492 |  0.5465          |   0.1191
 | Volatility Breakout         |  -7.7798    |   -0.4803    |     -7.7798  |  0.5000          |   0.0274
 
+Equity Curve: ![Mean Reversion vs Buy & Hold](outputs/equity_curve.png)
+Max Drawdown: ![Mean Reversion Max Drawdown](outputs/drawdown.png)
+
 **Headline finding:** every signal-based strategy underperformed passive Buy & Hold in absolute return over this period - MSFT's sustained 2020–2026 uptrend favoured staying invested over selectively timing entries. Mean Reversion had the best *risk-adjusted* profile (highest Sharpe, shallowest drawdown) despite lower absolute return, which is arguably the more interesting result than chasing the highest return number.
 
 ## Limitations 

@@ -15,7 +15,7 @@ def plot_equity_curve(result: BackTestResult,data: pd.DataFrame,title: str = "St
     plt.legend()
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.show()
+    
     
 def plot_drawdown(result: BackTestResult, title: str = "Drawdown Over Time"):
     peak_value = result.equity_curve.cummax()
@@ -31,7 +31,7 @@ def plot_drawdown(result: BackTestResult, title: str = "Drawdown Over Time"):
     plt.ylabel("Drawdown")
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.show()
+    
     
 def plot_strategy_comparison(comparison: pd.DataFrame, metric: str = "Sharpe Ratio"):
     plt.figure(figsize=(10, 5))
@@ -39,7 +39,7 @@ def plot_strategy_comparison(comparison: pd.DataFrame, metric: str = "Sharpe Rat
     plt.title(f"Strategy Comparison: {metric}")
     plt.xlabel(metric)
     plt.tight_layout()
-    plt.show()
+    
     
 def save_all_plots(result: BackTestResult, data: pd.DataFrame):
     plot_equity_curve(result, data)
@@ -47,5 +47,5 @@ def save_all_plots(result: BackTestResult, data: pd.DataFrame):
     plt.close()
 
     plot_drawdown(result)
-    plt.savefig(f"output/drawdown.png")
+    plt.savefig(f"outputs/drawdown.png")
     plt.close()
