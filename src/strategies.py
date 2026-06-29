@@ -128,3 +128,7 @@ class VolatilityBreakoutStrategy(Strategy):
         
         signals = (data["Close"] > breakout_threshold).astype(int)
         return signals.fillna(0)
+    
+class BuyAndHold(Strategy):
+    def generate_signals(self, data: pd.DataFrame) -> pd.Series:
+        return pd.Series(1, index=data.index)

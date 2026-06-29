@@ -15,6 +15,7 @@ def main():
     backtester = BackTester(starting_capital=1000)
     
     strategies = {
+        "Buy and Hold": BuyAndHold(),
         "Moving Average Crossover": MovingAverageCrossover(),
         "Momentum": MomentumStrategy(),
         "Mean Reversion": MeanReversionStrategy(),
@@ -24,10 +25,11 @@ def main():
         "Volatility Breakout": VolatilityBreakoutStrategy()
     }
     
+    results_raw = {}
     results = {}
     for name, strategy in strategies.items():
-        result = backtester.run_backtest(data=data,strategy=strategy)
-        results[name] = metric_summary(result)
+        results_raw[name] = backtester.run_backtest(data=data,strategy=strategy)
+        results[name] = metric_summary(results_raw[name])
         print(f"Finished: {name}")
     
     comparison = pd.DataFrame(results).T
@@ -35,8 +37,8 @@ def main():
     print(comparison.round(4))
     comparison.to_csv(f"outputs/comparison_results.csv")
     
-    plot_equity_curve(result, data, title="Moving Average Crossover vs Buy & Hold")
-    plot_drawdown(result)
+    plot_equity_curve(results_raw["Mean Reversion"], data, title="Mean Reversion vs Buy & Hold")
+    plot_drawdown(results_raw["Mean Reversion"])
     
 if __name__ == "__main__":
     test_max_drawdown()

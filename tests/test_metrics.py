@@ -99,9 +99,7 @@ def test_annualised_volatility():
     backtester = BackTester()
     result = backtester.run_backtest(data,MomentumStrategy(lookback=5))
     assert round(annualised_volatility(result,30),2) == 0.05
-    
-if __name__ == "__main__":
-    test_moving_avg_crossover()
+
     
 #python -m pytest tests/ -vv
     

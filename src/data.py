@@ -11,7 +11,6 @@ class DataLoader():
     def get_price_history(self, ticker: str, start: str = None, end: str = None,period: str = None) -> pd.DataFrame:
         yf_ticker = yf.Ticker(ticker)
         data = yf_ticker.history(start=start, end=end, period=period)
-        yf.download()
 
         if data.empty:
             raise ValueError(f"No data returned for {ticker} between {start} and {end}")
