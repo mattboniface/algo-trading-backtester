@@ -43,10 +43,9 @@ class MeanReversionStrategy(Strategy):
         return signals.fillna(0)
     
 class RSIStrategy(Strategy):   
-    def __init__(self,window: int = 20, overbought: int = 70,oversold:int = 30):
+    def __init__(self,window: int = 20,oversold:int = 30):
         self.window = window
         
-        self.overbought = overbought
         self.oversold = oversold
                      
     def calculate_rsi(self,data:pd.DataFrame):
