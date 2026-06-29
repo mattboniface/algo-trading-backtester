@@ -24,14 +24,31 @@ Given OHLCV price data for a single asset, this framework:
 | Buy and Hold | | Buy on initial day and stay long |
 
 
-## Results
-[charts/table go here]
+## Results (MSFT, 2020-01-01 - 2025-12-31)
 
-## Limitations
-[be honest]
+--- Strategy Comparison ---
+| Total Return (%) | Sharpe Ratio | Max Drawdown (%) | Win Rate | Annualised Volatility |
+| --- | --- | --- | --- | --- |
+| Buy and Hold                |  130.7734   |   0.7785     |     -33.7173 |  0.5525          |   0.2075
+| Moving Average Crossover    |  91.9974    |   0.9269     |     -18.7552 |  0.5596          |   0.1264
+| Momentum                    |  99.1994    |   1.0187     |     -13.3363 |  0.5595          |   0.1203
+| Mean Reversion              |  37.7253    |   0.7144     |     -8.3297  |  0.5735          |   0.0792
+| RSI                         |  19.2677    |   0.4652     |     -9.5677  |  0.5333          |   0.0684
+| Bollinger Band              |  -4.5089    |   -0.3082    |     -8.3751  |  0.5143          |   0.0241
+| MACD                        |  50.4244    |   0.6331     |     -15.0492 |  0.5465          |   0.1191
+| Volatility Breakout         |  -7.7798    |   -0.4803    |     -7.7798  |  0.5000          |   0.0274
+
+**Headline finding:** every signal-based strategy underperformed passive Buy & Hold in absolute return over this period - MSFT's sustained 2020–2026 uptrend favoured staying invested over selectively timing entries. Mean Reversion had the best *risk-adjusted* profile (highest Sharpe, shallowest drawdown) despite lower absolute return, which is arguably the more interesting result than chasing the highest return number.
+
+## Limitations 
+- **Single Asset, Single Period Evaluation** Results on MSFT (2020 - 2026) are not evidence that the strategies will/won't work on a different asset.
+- **No transactional costs modelled** Real returns would be lower, especially for strategies with more signal changes due to transactional costs
+- **Basic Strategies Reviewed** Real world strategies used would not be as simple as these
+- **Sharpe Ratio Assumes 0% Risk Free Rate** In the real world the risk free rate would be 3+%
+- **Can only go long** In a bearish market we can only sit on cash, which isn't representative of the real world
 
 ## How to run
-\`\`\`
+```bash
 pip install -r requirements.txt
-python src/backtest.py
-\`\`\`
+python run_backtest.py
+```

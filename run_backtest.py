@@ -10,7 +10,7 @@ def main():
     ticker = "SPY"
     
     loader = DataLoader()
-    data = loader.get_price_history(ticker = ticker,start = "2020-01-01",end = "2026-06-22")
+    data = loader.get_price_history(ticker = ticker,start = "2020-01-01",end = "2025-12-31")
     
     backtester = BackTester(starting_capital=1000)
     
